@@ -13,7 +13,7 @@ __global__ void shifting(PointXYZI *d_points, double *d_shift) {
     d_points[idx].z += d_shift[2];
 }
 
-PointCloud shiftPoints(PointCloud &h_cloud, std::vector<double> shift) {
+PointCloud ShiftPoints(PointCloud &h_cloud, std::vector<double> shift) {
 
     PointXYZI *d_points;
     double *d_shift;
