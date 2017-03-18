@@ -13,6 +13,21 @@ __global__ void shifting(PointXYZI *d_points, double *d_shift) {
     d_points[idx].z += d_shift[2];
 }
 
+__global__ void rotate(PointXYZI *d_points, Quaternion *d_quaternion) {
+
+    int idx = threadIdx.x;
+
+    Quaternion q(d_points[idx]);
+
+    Quaternion q_prime = *d_quaternion * q * d_quaternion->inverse();
+
+    d_points[idx].x = q_prime.x;
+    d_points[idx].y = q_prime.y;
+    d_points[idx].z = q_prime.z;
+
+}
+
+
 PointCloud ShiftPoints(PointCloud &h_cloud, std::vector<double> shift) {
 
     PointXYZI *d_points;
@@ -38,4 +53,25 @@ PointCloud ShiftPoints(PointCloud &h_cloud, std::vector<double> shift) {
     cudaFree(d_shift);
 
     return h_cloud;
+}
+
+PointCloud RotatePoints(PointCloud &h_cloud, Quaternion &quaternion){
+
+    PointXYZI *d_points;
+    PointXYZI *h_points = &(h_cloud.points[0]);
+
+    cudaMalloc((void**) &d_points, h_cloud.points.size() * sizeof(PointXYZI));
+
+    cudaMemcpy(d_points, h_points, h_cloud.points.size() * sizeof(PointXYZI), cudaMemcpyHostToDevice);
+
+    int N = h_cloud.points.size();
+
+    rotate<<<1,N>>>(d_points, &quaternion);
+
+    cudaMemcpy(h_points, d_points, h_cloud.points.size() * sizeof(PointXYZI), cudaMemcpyDeviceToHost);
+
+    cudaFree(d_points);
+
+    return h_cloud;
+
 }

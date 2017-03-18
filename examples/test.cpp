@@ -28,9 +28,12 @@ int main(int argc, char * argv[])
   double duration;
   start = std::clock();
 
-  //shift points on gpu
+  //shift and rotate points on gpu
   std::vector<double> shift {20.0, 20.0, 20.0};
+  Quaternion quaternion(0.0, 0.0, 0.0, 1.0);
   cloud = ShiftPoints(cloud, shift);
+  cloud = RotatePoints(cloud, quaternion);
+
 
   duration = (std::clock() - start) / (double) CLOCKS_PER_SEC;
   std::cout << "Execution time: "<< duration << "s" << std::endl;

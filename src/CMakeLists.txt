@@ -1,2 +1,2 @@
 cuda_add_library(
-	fastpoints point_types.cpp point_cloud.cpp transform.cu reader.cpp)
+		fastpoints quaternion.cu point_types.cpp point_cloud.cpp transform.cu reader.cpp)
