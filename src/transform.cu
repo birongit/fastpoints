@@ -5,6 +5,8 @@
 #include <cuda_runtime_api.h>
 #include <device_launch_parameters.h>
 
+#include <iostream>
+
 __global__ void shifting(PointXYZI *d_points, double *d_shift) {
 
     int idx = threadIdx.x;
@@ -55,18 +57,22 @@ PointCloud ShiftPoints(PointCloud &h_cloud, std::vector<double> shift) {
     return h_cloud;
 }
 
-PointCloud RotatePoints(PointCloud &h_cloud, Quaternion &quaternion){
+PointCloud RotatePoints(PointCloud &h_cloud, Quaternion &h_quaternion){
 
     PointXYZI *d_points;
     PointXYZI *h_points = &(h_cloud.points[0]);
 
+    Quaternion *d_quaternion;
+
     cudaMalloc((void**) &d_points, h_cloud.points.size() * sizeof(PointXYZI));
+    cudaMalloc((void**) &d_quaternion, sizeof(Quaternion));
 
     cudaMemcpy(d_points, h_points, h_cloud.points.size() * sizeof(PointXYZI), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_quaternion, &h_quaternion, sizeof(Quaternion), cudaMemcpyHostToDevice);
 
     int N = h_cloud.points.size();
 
-    rotate<<<1,N>>>(d_points, &quaternion);
+    rotate<<<1,N>>>(d_points, d_quaternion);
 
     cudaMemcpy(h_points, d_points, h_cloud.points.size() * sizeof(PointXYZI), cudaMemcpyDeviceToHost);
 

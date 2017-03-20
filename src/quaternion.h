@@ -16,6 +16,10 @@
 class Quaternion {
 public:
 
+    CUDA_CALLABLE_MEMBER Quaternion() {};
+
+    CUDA_CALLABLE_MEMBER ~Quaternion() {};
+
     CUDA_CALLABLE_MEMBER Quaternion(double x, double y, double z, double w): x(x), y(y), z(z), w(w) {};
 
     CUDA_CALLABLE_MEMBER Quaternion(PointXYZI &point): x(point.x), y(point.y), z(point.z), w(0.0) {};
