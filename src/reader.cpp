@@ -7,6 +7,8 @@ void Read(std::string &path, PointCloud &cloud) {
     std::string delimiter = " ";
     std::vector<std::string> elements;
 
+    std::cout << "Reading cloud " << path << std::endl;
+
     std::ifstream file {path};
 
     if (!file.good()) {
