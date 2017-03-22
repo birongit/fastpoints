@@ -1,7 +1,3 @@
-//
-// Created by Birgit Henke on 3/20/17.
-//
-
 #ifndef PROJECTFASTPOINTS_WRITER_H
 #define PROJECTFASTPOINTS_WRITER_H
 

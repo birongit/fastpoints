@@ -1,7 +1,3 @@
-//
-// Created by Birgit Henke on 3/17/17.
-//
-
 #include <math.h>
 #include "quaternion.h"
 

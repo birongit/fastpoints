@@ -1,7 +1,3 @@
-//
-// Created by Birgit Henke on 3/17/17.
-//
-
 #ifndef PROJECTFASTPOINTS_QUATERNION_H
 #define PROJECTFASTPOINTS_QUATERNION_H
 

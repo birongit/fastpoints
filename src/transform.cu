@@ -5,8 +5,6 @@
 #include <cuda_runtime_api.h>
 #include <device_launch_parameters.h>
 
-#include <iostream>
-
 __global__ void shifting(PointXYZI *d_points, double *d_shift) {
 
     int idx = threadIdx.x;
@@ -77,6 +75,7 @@ PointCloud RotatePoints(PointCloud &h_cloud, Quaternion &h_quaternion){
     cudaMemcpy(h_points, d_points, h_cloud.points.size() * sizeof(PointXYZI), cudaMemcpyDeviceToHost);
 
     cudaFree(d_points);
+    cudaFree(d_quaternion);
 
     return h_cloud;
 

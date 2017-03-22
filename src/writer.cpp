@@ -24,11 +24,11 @@ void PrintHeader(std::ostream &file, const PointCloud &cloud) {
 
     file << "VERSION " << ".7" << std::endl;
 
-    file << "FIELDS " <<  "x y z i" << std::endl;
+    file << "FIELDS " <<  cloud.points[0].FieldsString() << std::endl;
 
-    file << "SIZE " <<  "4 4 4 4" << std::endl;
+    file << "SIZE " <<  cloud.points[0].SizeString() << std::endl;
 
-    file << "TYPE " <<  "F F F F" << std::endl;
+    file << "TYPE " <<  cloud.points[0].TypeString() << std::endl;
 
     file << "WIDTH " << cloud.points.size() << std::endl;
 
@@ -44,7 +44,7 @@ void PrintPoints(std::ostream &file, const PointCloud &cloud) {
 
     for (auto point: cloud.points) {
 
-        file << (float) point.x << " " << (float) point.y << " " << (float) point.z << " " << (float) point.i << std::endl;
+        file << point << std::endl;
 
     }
 }
