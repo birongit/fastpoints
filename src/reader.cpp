@@ -1,7 +1,7 @@
 #include <thread>
 #include "reader.h"
 
-void Read(std::string &path, PointCloud &cloud) {
+void Read(std::string &path, PointCloud<PointXYZI> &cloud) {
 
     std::string line;
     std::string delimiter = " ";
@@ -30,7 +30,7 @@ void Read(std::string &path, PointCloud &cloud) {
 
 }
 
-void ReadPoints(std::ifstream &ifstream, PointCloud &cloud) {
+void ReadPoints(std::ifstream &ifstream, PointCloud<PointXYZI> &cloud) {
 
     while (!ifstream.eof()) {
         double x, y, z;

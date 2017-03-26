@@ -4,9 +4,9 @@
 #include "point_types.h"
 #include <vector>
 
-class PointCloud {
+template <class T> class PointCloud {
 public:
-    std::vector<PointXYZI> points;
+    std::vector<T> points;
 
 };
 

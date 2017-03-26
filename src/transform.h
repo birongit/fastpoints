@@ -3,8 +3,8 @@
 
 #include "quaternion.h"
 
-PointCloud ShiftPoints(PointCloud &h_cloud, std::vector<double> shift);
+PointCloud<PointXYZI> ShiftPoints(PointCloud<PointXYZI> &h_cloud, std::vector<double> shift);
 
-PointCloud RotatePoints(PointCloud &h_cloud, Quaternion &quaternion);
+PointCloud<PointXYZI> RotatePoints(PointCloud<PointXYZI> &h_cloud, Quaternion &quaternion);
 
 #endif //PROJECTFASTPOINTS_TRANSFORM_H_H

@@ -25,7 +25,7 @@ int main(int argc, char * argv[])
   }
 
   // read points from file
-  PointCloud cloud;
+  PointCloud<PointXYZI> cloud;
   Read(in, cloud);
   std::cout << "Loaded " << cloud.points.size() << " points from file." << std::endl;
 
