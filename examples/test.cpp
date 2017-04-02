@@ -4,6 +4,7 @@
 #include "../src/transform.h"
 #include "../src/reader.h"
 #include "../src/writer.h"
+#include "../src/geometry.h"
 
 std::string ParseArguments(std::string key, int argc, char * argv[]) {
 
@@ -37,6 +38,10 @@ int main(int argc, char * argv[])
   //shift and rotate points on gpu
   std::vector<double> shift {20.0, 20.0, 20.0};
   Quaternion quaternion(0.7071, 0.0, 0.0, 0.7071);
+
+  // test: call mean function from host
+  auto mean_point = mean(&cloud.points[0], cloud.points.size());
+  std::cout << "Mean: " << mean_point.x << " " << mean_point.y << " " << mean_point.z << std::endl;
 
   int N = 1;
 
