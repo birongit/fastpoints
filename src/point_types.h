@@ -1,10 +1,32 @@
 #ifndef PROJECT_POINT_TYPES_H
 #define PROJECT_POINT_TYPES_H
 
-
 #include <iostream>
+#ifdef __CUDACC__
+#define CUDA_CALLABLE_MEMBER __host__ __device__
+#else
+#define CUDA_CALLABLE_MEMBER
+#endif
 
-class PointXYZI {
+class Point3D {
+public:
+    CUDA_CALLABLE_MEMBER Point3D() { };
+    CUDA_CALLABLE_MEMBER Point3D(double x, double y, double z) : x(x), y(y), z(z) { };
+    CUDA_CALLABLE_MEMBER ~Point3D() { };
+
+    CUDA_CALLABLE_MEMBER Point3D operator+(Point3D &other);
+    CUDA_CALLABLE_MEMBER Point3D operator-(Point3D &other);
+
+    CUDA_CALLABLE_MEMBER Point3D operator+(Point3D &&other);
+    CUDA_CALLABLE_MEMBER Point3D operator-(Point3D &&other);
+
+    CUDA_CALLABLE_MEMBER Point3D operator*(double scalar);
+    CUDA_CALLABLE_MEMBER Point3D operator/(double scalar);
+
+    double x,y,z;
+};
+
+class PointXYZI : public Point3D {
 public:
     PointXYZI() { };
     PointXYZI(double x, double y, double z, double i);
@@ -16,7 +38,7 @@ public:
 
     friend std::ostream& operator<< (std::ostream &out, const PointXYZI &point);
 
-    double x,y,z,i;
+    double i;
 };
 
 class PointXYZINormal : public PointXYZI {

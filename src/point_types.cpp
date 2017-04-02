@@ -1,7 +1,31 @@
 #include "point_types.h"
 
+Point3D Point3D::operator+(Point3D &other) {
+    return Point3D(this->x + other.x, this->y + other.y, this->z + other.z);
+}
+
+Point3D Point3D::operator-(Point3D &other) {
+    return Point3D(this->x - other.x, this->y - other.y, this->z - other.z);
+}
+
+Point3D Point3D::operator+(Point3D &&other) {
+    return Point3D(this->x + other.x, this->y + other.y, this->z + other.z);
+}
+
+Point3D Point3D::operator-(Point3D &&other) {
+    return Point3D(this->x - other.x, this->y - other.y, this->z - other.z);
+}
+
+Point3D Point3D::operator*(double scalar) {
+    return Point3D(this->x * scalar, this->y * scalar, this->z * scalar);
+}
+
+Point3D Point3D::operator/(double scalar) {
+    return Point3D(this->x / scalar, this->y / scalar, this->z / scalar);
+}
+
 PointXYZI::PointXYZI(double x, double y, double z, double i) :
-        x(x), y(y), z(z), i(i)
+        Point3D(x,y,z), i(i)
 { }
 
 std::ostream& operator<< (std::ostream &out, const PointXYZI &point)
