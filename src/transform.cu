@@ -28,7 +28,7 @@ __global__ void rotate(PointXYZI *d_points, Quaternion *d_quaternion) {
 }
 
 
-PointCloud<PointXYZI> ShiftPoints(PointCloud<PointXYZI> &h_cloud, std::vector<double> shift) {
+PointCloud<PointXYZI> shift_points(PointCloud<PointXYZI> &h_cloud, std::vector<double> shift) {
 
     PointXYZI *d_points;
     double *d_shift;
@@ -55,7 +55,7 @@ PointCloud<PointXYZI> ShiftPoints(PointCloud<PointXYZI> &h_cloud, std::vector<do
     return h_cloud;
 }
 
-PointCloud<PointXYZI> RotatePoints(PointCloud<PointXYZI> &h_cloud, Quaternion &h_quaternion){
+PointCloud<PointXYZI> rotate_points(PointCloud<PointXYZI> &h_cloud, Quaternion &h_quaternion){
 
     PointXYZI *d_points;
     PointXYZI *h_points = &(h_cloud.points[0]);

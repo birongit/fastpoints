@@ -6,11 +6,11 @@
 #include <iostream>
 #include "point_cloud.h"
 
-void Read(std::string &path, PointCloud<PointXYZI> &cloud);
+void read(std::string &path, PointCloud<PointXYZI> &cloud);
 
-void TokenizeLine(std::string& line, std::string& delimiter, std::vector<std::string>& tokens);
+void tokenize_line(std::string &line, std::string &delimiter, std::vector<std::string> &tokens);
 
-void ReadPoints(std::ifstream &ifstream, PointCloud<PointXYZI> &cloud);
+void read_points(std::ifstream &ifstream, PointCloud<PointXYZI> &cloud);
 
 
 #endif //PROJECTFASTPOINTS_READER_H

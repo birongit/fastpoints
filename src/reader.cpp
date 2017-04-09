@@ -1,7 +1,7 @@
 #include <thread>
 #include "reader.h"
 
-void Read(std::string &path, PointCloud<PointXYZI> &cloud) {
+void read(std::string &path, PointCloud<PointXYZI> &cloud) {
 
     std::string line;
     std::string delimiter = " ";
@@ -18,7 +18,7 @@ void Read(std::string &path, PointCloud<PointXYZI> &cloud) {
 
     do {
         getline(file, line);
-        TokenizeLine(line, delimiter, elements);
+        tokenize_line(line, delimiter, elements);
     } while ((elements[0] != std::string("DATA")));
 
     if (elements[1] != std::string("ascii")) {
@@ -26,11 +26,11 @@ void Read(std::string &path, PointCloud<PointXYZI> &cloud) {
         exit(EXIT_FAILURE);
     }
 
-    ReadPoints(file, cloud);
+    read_points(file, cloud);
 
 }
 
-void ReadPoints(std::ifstream &ifstream, PointCloud<PointXYZI> &cloud) {
+void read_points(std::ifstream &ifstream, PointCloud<PointXYZI> &cloud) {
 
     while (!ifstream.eof()) {
         double x, y, z;
@@ -40,7 +40,7 @@ void ReadPoints(std::ifstream &ifstream, PointCloud<PointXYZI> &cloud) {
     }
 }
 
-void TokenizeLine(std::string& line, std::string& delimiter, std::vector<std::string>& tokens) {
+void tokenize_line(std::string &line, std::string &delimiter, std::vector<std::string> &tokens) {
 
     tokens.clear();
 

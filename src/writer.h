@@ -5,27 +5,7 @@
 #include <fstream>
 #include <iostream>
 
-template <typename T> void Write(std::string path, PointCloud<T> &cloud) {
-
-    std::ofstream file;
-
-    std::cout << "Writing cloud " << path << std::endl;
-
-    file.open(path);
-
-    if (file.fail())
-    {
-        std::cerr << "Opening file " << path << " failed!" << std::endl;
-        return;
-    }
-
-    PrintHeader(file, cloud);
-
-    PrintPoints(file, cloud);
-
-}
-
-template <typename T> void PrintHeader(std::ostream &file, const PointCloud<T> &cloud) {
+template <typename T> void print_header(std::ostream &file, const PointCloud<T> &cloud) {
 
     file << "VERSION " << ".7" << std::endl;
 
@@ -45,13 +25,33 @@ template <typename T> void PrintHeader(std::ostream &file, const PointCloud<T> &
 
 }
 
-template <typename T> void PrintPoints(std::ostream &file, const PointCloud<T> &cloud) {
+template <typename T> void print_points(std::ostream &file, const PointCloud<T> &cloud) {
 
     for (auto point: cloud.points) {
 
         file << point << std::endl;
 
     }
+}
+
+template <typename T> void write(std::string path, PointCloud<T> &cloud) {
+
+    std::ofstream file;
+
+    std::cout << "Writing cloud " << path << std::endl;
+
+    file.open(path);
+
+    if (file.fail())
+    {
+        std::cerr << "Opening file " << path << " failed!" << std::endl;
+        return;
+    }
+
+    print_header(file, cloud);
+
+    print_points(file, cloud);
+
 }
 
 
