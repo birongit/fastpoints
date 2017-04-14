@@ -5,6 +5,7 @@
 #include "../src/reader.h"
 #include "../src/writer.h"
 #include "../src/geometry.h"
+#include "../src/cuda_utils.h"
 
 std::string parse_arguments(std::string key, int argc, char * argv[]) {
 
@@ -16,6 +17,7 @@ std::string parse_arguments(std::string key, int argc, char * argv[]) {
 
 int main(int argc, char * argv[])
 {
+  std::cout << "Starting example program using CUDA VERSION " << float(get_cuda_version()) / 1000 << std::endl;
 
   std::string in  = parse_arguments(std::string("-i"), argc, argv);
   std::string out = parse_arguments(std::string("-o"), argc, argv);
