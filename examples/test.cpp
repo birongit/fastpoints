@@ -43,12 +43,18 @@ int main(int argc, char * argv[])
 
   // test: call functions from host
   auto mean_point = mean(cloud);
+  std::cout << "Mean: " << mean_point.x << " " << mean_point.y << " " << mean_point.z << std::endl;
   auto covar = covariance(cloud);
   std::cout << "Covariance:" << std::endl;
   std::cout << covar[0] << " " << covar[1] << " " << covar[2] << std::endl;
   std::cout << covar[3] << " " << covar[4] << " " << covar[5] << std::endl;
   std::cout << covar[6] << " " << covar[7] << " " << covar[8] << std::endl;
-  std::cout << "Mean: " << mean_point.x << " " << mean_point.y << " " << mean_point.z << std::endl;
+
+  double eig_val[3];
+  double eig_vec[3];
+
+  eigen3(&covar[0], eig_val, eig_vec);
+  std::cout << "Eigenvalues: " << eig_val[0] << " " << eig_val[1] << " " << eig_val[2] << std::endl;
 
   int N = 1;
 

@@ -3,12 +3,18 @@
 
 #include "point_types.h"
 #include "point_cloud.h"
+#include <assert.h>
 
 #ifdef __CUDACC__
 #define CUDA_CALLABLE_MEMBER __host__ __device__
 #else
 #define CUDA_CALLABLE_MEMBER
 #endif
+
+// matrix must be 3x3 and symmetric
+CUDA_CALLABLE_MEMBER void eigen3(double* matrix, double* eig_val, double* eig_vec);
+
+CUDA_CALLABLE_MEMBER double det3(double *matrix);
 
 template<typename T> CUDA_CALLABLE_MEMBER Point3D mean(T *points, int n) {
 
