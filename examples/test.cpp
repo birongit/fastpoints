@@ -51,10 +51,14 @@ int main(int argc, char * argv[])
   std::cout << covar[6] << " " << covar[7] << " " << covar[8] << std::endl;
 
   double eig_val[3];
-  double eig_vec[3];
+  double eig_vec[9];
 
   eigen3(&covar[0], eig_val, eig_vec);
   std::cout << "Eigenvalues: " << eig_val[0] << " " << eig_val[1] << " " << eig_val[2] << std::endl;
+  std::cout << "Eigenvectors: " << std::endl;
+  std::cout << eig_vec[0] << " " << eig_vec[1] << " " << eig_vec[2] << std::endl;
+  std::cout << eig_vec[3] << " " << eig_vec[4] << " " << eig_vec[5] << std::endl;
+  std::cout << eig_vec[6] << " " << eig_vec[7] << " " << eig_vec[8] << std::endl;
 
   int N = 1;
 

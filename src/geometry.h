@@ -16,6 +16,8 @@ CUDA_CALLABLE_MEMBER void eigen3(double* matrix, double* eig_val, double* eig_ve
 
 CUDA_CALLABLE_MEMBER double det3(double *matrix);
 
+CUDA_CALLABLE_MEMBER void norm(double *vector, int size);
+
 template<typename T> CUDA_CALLABLE_MEMBER Point3D mean(T *points, int n) {
 
     if (n == 0) return Point3D();

@@ -45,7 +45,39 @@ CUDA_CALLABLE_MEMBER void eigen3(double* matrix, double* eig_val, double* eig_ve
         eig_val[1] = 3 * q - eig_val[0] - eig_val[2];
     }
 
-    // TODO eig_vec
+    assert(eig_val[0]!=eig_val[1]);
+    assert(eig_val[1]!=eig_val[2]);
+    assert(eig_val[0]!=eig_val[2]);
+
+    for (int k = 0; k < 3; k++) {
+        double I[] = {1.,0.,0.,0.,1.,0.,0.,0.,1};
+        double C[9];
+        for (int i = 0; i < 9; i++) {
+            C[i] = (matrix[i] - eig_val[k] * I[i]);
+        }
+
+        //compute the cross product of two rows
+        eig_vec[3*k+0] = C[1]*C[5] - C[2]*C[4];
+        eig_vec[3*k+1] = C[2]*C[3] - C[0]*C[5];
+        eig_vec[3*k+2] = C[0]*C[4] - C[1]*C[3];
+
+        norm(&eig_vec[3*k], 3);
+    }
+
+}
+
+CUDA_CALLABLE_MEMBER void norm(double *vector, int size) {
+
+    double norm = 0;
+
+    for (int i = 0; i < size; i++) {
+        norm += vector[i] * vector[i];
+    }
+    norm = sqrt(norm);
+
+    for (int i = 0; i < size; i++) {
+        vector[i] /= norm;
+    }
 
 }
 
