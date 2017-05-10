@@ -13,3 +13,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build/)
 add_subdirectory(src)
 add_subdirectory(examples)
 
+enable_testing()
+add_subdirectory(test)
+
