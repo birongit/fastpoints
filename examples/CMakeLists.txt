@@ -1,5 +1,5 @@
 
-add_executable(simple test.cpp)
+add_executable(simple demo.cpp)
 
 target_link_libraries(
 		simple
