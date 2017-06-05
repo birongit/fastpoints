@@ -6,6 +6,7 @@
 #include "../src/writer.h"
 #include "../src/geometry.h"
 #include "../src/cuda_utils.h"
+#include "../src/normals.h"
 
 std::string parse_arguments(std::string key, int argc, char * argv[]) {
 
@@ -67,10 +68,19 @@ int main(int argc, char * argv[])
     cloud = rotate_points(cloud, quaternion);
   }
 
+  PointCloud<Point3D> cloud2;
+
+  for (auto point : cloud.points) {
+    cloud2.points.push_back(point);
+  }
+
+  Normals ne(cloud2);
+  auto normals = ne.estimate();
+
   duration = (std::clock() - start) / (double) CLOCKS_PER_SEC / N;
   std::cout << "Execution time: "<< duration << "s" << std::endl;
 
-  write(out, cloud);
+  write(out, normals);
 
   return 0;
 }

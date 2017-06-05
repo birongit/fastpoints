@@ -23,6 +23,8 @@ public:
     CUDA_CALLABLE_MEMBER Point3D operator*(double scalar);
     CUDA_CALLABLE_MEMBER Point3D operator/(double scalar);
 
+    CUDA_CALLABLE_MEMBER double distance2(Point3D &other);
+
     double x,y,z;
 };
 
@@ -30,6 +32,7 @@ class PointXYZI : public Point3D {
 public:
     PointXYZI() { };
     PointXYZI(double x, double y, double z, double i);
+    PointXYZI(Point3D point);
     virtual ~PointXYZI() { };
 
     static std::string SizeString();
@@ -45,6 +48,7 @@ class PointXYZINormal : public PointXYZI {
 public:
     PointXYZINormal() { };
     PointXYZINormal(PointXYZI point);
+    PointXYZINormal(Point3D point);
     PointXYZINormal(PointXYZI point, double n_x, double n_y, double n_z);
     PointXYZINormal(double x, double y, double z, double i, double n_x, double n_y, double n_z);
     ~PointXYZINormal() { };

@@ -24,6 +24,12 @@ Point3D Point3D::operator/(double scalar) {
     return Point3D(this->x / scalar, this->y / scalar, this->z / scalar);
 }
 
+double Point3D::distance2(Point3D &other) {
+    return (this->x - other.x) * (this->x - other.x) +
+           (this->y - other.y) * (this->y - other.y) +
+           (this->z - other.z) * (this->z - other.z);
+}
+
 PointXYZI::PointXYZI(double x, double y, double z, double i) :
         Point3D(x,y,z), i(i)
 { }
@@ -86,4 +92,12 @@ std::ostream &operator<<(std::ostream &out, const PointXYZINormal &point) {
     << (float) point.n_z;
 
     return out;
+}
+
+PointXYZI::PointXYZI(Point3D point): Point3D(point) {
+
+}
+
+PointXYZINormal::PointXYZINormal(Point3D point): PointXYZI(point) {
+
 }
