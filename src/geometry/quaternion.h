@@ -7,7 +7,7 @@
 #define CUDA_CALLABLE_MEMBER
 #endif
 
-#include "point_types.h"
+#include "../common/point_types.h"
 
 class Quaternion {
 public:

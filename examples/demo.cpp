@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "../src/point_cloud.h"
-#include "../src/transform.h"
-#include "../src/reader.h"
-#include "../src/writer.h"
-#include "../src/geometry.h"
-#include "../src/cuda_utils.h"
-#include "../src/normals.h"
+#include "../src/common/point_cloud.h"
+#include "../src/geometry/transform.h"
+#include "../src/io/reader.h"
+#include "../src/io/writer.h"
+#include "../src/geometry/geometry.h"
+#include "../src/utils/cuda_utils.h"
+#include "../src/geometry/normals.h"
 
 std::string parse_arguments(std::string key, int argc, char * argv[]) {
 

@@ -1,3 +1,7 @@
+add_subdirectory(io)
+add_subdirectory(common)
+add_subdirectory(geometry)
+add_subdirectory(utils)
+
 cuda_add_library(
-		fastpoints quaternion.cu point_types.cpp point_cloud.cpp transform.cu reader.cpp writer.cpp geometry.cu
-		cuda_utils.cu normals.cpp)
+		fastpoints ${io} ${common} ${geometry} ${utils})

@@ -1,7 +1,7 @@
 #ifndef PROJECTFASTPOINTS_WRITER_H
 #define PROJECTFASTPOINTS_WRITER_H
 
-#include "point_cloud.h"
+#include "../common/point_cloud.h"
 #include <fstream>
 #include <iostream>
 

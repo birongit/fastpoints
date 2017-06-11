@@ -4,7 +4,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include "point_cloud.h"
+#include "../common/point_cloud.h"
 
 void read(std::string &path, PointCloud<PointXYZI> &cloud);
 

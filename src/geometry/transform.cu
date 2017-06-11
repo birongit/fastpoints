@@ -1,4 +1,4 @@
-#include "../src/point_cloud.h"
+#include "../common/point_cloud.h"
 
 #include "transform.h"
 

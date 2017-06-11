@@ -1,8 +1,8 @@
 #ifndef FASTPOINTS_NORMALS_H
 #define FASTPOINTS_NORMALS_H
 
-#include "point_cloud.h"
-#include "point_types.h"
+#include "../common/point_cloud.h"
+#include "../common/point_types.h"
 #include <queue>
 #include <float.h>
 #include "geometry.h"

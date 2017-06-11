@@ -1,8 +1,8 @@
 #ifndef PROJECTFASTPOINTS_GEOMETRY_H
 #define PROJECTFASTPOINTS_GEOMETRY_H
 
-#include "point_types.h"
-#include "point_cloud.h"
+#include "../common/point_types.h"
+#include "../common/point_cloud.h"
 #include <assert.h>
 
 #ifdef __CUDACC__
