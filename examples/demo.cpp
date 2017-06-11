@@ -42,6 +42,13 @@ int main(int argc, char * argv[])
   std::vector<double> shift {20.0, 20.0, 20.0};
   Quaternion quaternion(0.7071, 0.0, 0.0, 0.7071);
 
+  int N = 1;
+
+  for (int i = 0; i < N; i++) {
+    cloud = shift_points(cloud, shift);
+    cloud = rotate_points(cloud, quaternion);
+  }
+
   // test: call functions from host
   auto mean_point = mean(cloud);
   std::cout << "Mean: " << mean_point.x << " " << mean_point.y << " " << mean_point.z << std::endl;
@@ -60,13 +67,6 @@ int main(int argc, char * argv[])
   std::cout << eig_vec[0] << " " << eig_vec[1] << " " << eig_vec[2] << std::endl;
   std::cout << eig_vec[3] << " " << eig_vec[4] << " " << eig_vec[5] << std::endl;
   std::cout << eig_vec[6] << " " << eig_vec[7] << " " << eig_vec[8] << std::endl;
-
-  int N = 1;
-
-  for (int i = 0; i < N; i++) {
-    cloud = shift_points(cloud, shift);
-    cloud = rotate_points(cloud, quaternion);
-  }
 
   PointCloud<Point3D> cloud2;
 
