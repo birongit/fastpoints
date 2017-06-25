@@ -7,6 +7,7 @@
 #include "../src/geometry/geometry.h"
 #include "../src/utils/cuda_utils.h"
 #include "../src/geometry/normals.h"
+#include "../src/core/kernels.h"
 
 std::string parse_arguments(std::string key, int argc, char * argv[]) {
 
@@ -76,6 +77,8 @@ int main(int argc, char * argv[])
 
   Normals ne(cloud2);
   auto normals = ne.estimate();
+
+  reduce_max(cloud2);
 
   duration = (std::clock() - start) / (double) CLOCKS_PER_SEC / N;
   std::cout << "Execution time: "<< duration << "s" << std::endl;

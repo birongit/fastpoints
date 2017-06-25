@@ -3,7 +3,7 @@
 
 #include <array>
 #include "test_utils.h"
-#include "../src/geometry.h"
+#include "../src/geometry/geometry.h"
 
 int test_eig3();
 
