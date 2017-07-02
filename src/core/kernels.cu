@@ -28,7 +28,7 @@ __global__ void reduce(const Point3D * const d_points, Point3D *d_result, func* 
 
 }
 
-void reduce(PointCloud<Point3D> &cloud, func& f) {
+Point3D reduce(PointCloud<Point3D> &cloud, func& f) {
 
     Point3D *d_points;
     Point3D *d_result;
@@ -64,6 +64,8 @@ void reduce(PointCloud<Point3D> &cloud, func& f) {
     cudaFree(d_f);
     free(h_f);
 
+    return h_result;
+
 }
 
 __device__ double max_d(double n, double m) {
@@ -72,8 +74,8 @@ __device__ double max_d(double n, double m) {
 __device__ func max_func = max_d;
 
 
-void reduce_max(PointCloud<Point3D> &cloud) {
-    reduce(cloud, max_func);
+Point3D reduce_max(PointCloud<Point3D> &cloud) {
+    return reduce(cloud, max_func);
 }
 
 __device__ double min_d(double n, double m) {
@@ -82,6 +84,6 @@ __device__ double min_d(double n, double m) {
 __device__ func min_func = min_d;
 
 
-void reduce_min(PointCloud<Point3D> &cloud) {
-    reduce(cloud, min_func);
+Point3D reduce_min(PointCloud<Point3D> &cloud) {
+    return reduce(cloud, min_func);
 }

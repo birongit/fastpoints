@@ -78,8 +78,9 @@ int main(int argc, char * argv[])
   Normals ne(cloud2);
   auto normals = ne.estimate();
 
-  reduce_max(cloud2);
-  reduce_min(cloud2);
+  auto range = reduce_max(cloud2) - reduce_min(cloud2);
+
+  std::cout << "Range of points: x = " << range.x << "  y = " << range.y << "  z = " << range.z << std::endl;
 
   duration = (std::clock() - start) / (double) CLOCKS_PER_SEC / N;
   std::cout << "Execution time: "<< duration << "s" << std::endl;
