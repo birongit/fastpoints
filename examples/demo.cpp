@@ -79,6 +79,7 @@ int main(int argc, char * argv[])
   auto normals = ne.estimate();
 
   reduce_max(cloud2);
+  reduce_min(cloud2);
 
   duration = (std::clock() - start) / (double) CLOCKS_PER_SEC / N;
   std::cout << "Execution time: "<< duration << "s" << std::endl;

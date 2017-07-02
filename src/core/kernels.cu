@@ -4,16 +4,12 @@ typedef double (*func)(double n, double m);
 
 __global__ void reduce(const Point3D * const d_points, Point3D *d_result, func* f, Point3D *d_reduce) {
 
-
     const int idx = threadIdx.x;
-
 
     d_reduce[idx] = d_points[idx];
     d_reduce[idx] = d_points[idx];
 
     __syncthreads();
-
-    Point3D res;
 
     for (unsigned int s = blockDim.x / 2; s > 0; s >>= 1)
     {
@@ -32,12 +28,7 @@ __global__ void reduce(const Point3D * const d_points, Point3D *d_result, func* 
 
 }
 
-__device__ double max_d(double n, double m) {
-    return (m > n) ? m : n;
-}
-__device__ func max_func = max_d;
-
-void reduce_max(PointCloud<Point3D> &cloud) {
+void reduce(PointCloud<Point3D> &cloud, func& f) {
 
     Point3D *d_points;
     Point3D *d_result;
@@ -47,7 +38,7 @@ void reduce_max(PointCloud<Point3D> &cloud) {
     func* d_f;
     h_f = (func*)malloc(sizeof(func));
     cudaMalloc((void**)&d_f,sizeof(func));
-    cudaMemcpyFromSymbol( &h_f[0], max_func, sizeof(func));
+    cudaMemcpyFromSymbol( &h_f[0], f, sizeof(func));
     cudaMemcpy(d_f,h_f,sizeof(func),cudaMemcpyHostToDevice);
 
     cudaMalloc(&d_reduce, sizeof(Point3D) * cloud.points.size());
@@ -73,4 +64,24 @@ void reduce_max(PointCloud<Point3D> &cloud) {
     cudaFree(d_f);
     free(h_f);
 
+}
+
+__device__ double max_d(double n, double m) {
+    return (m > n) ? m : n;
+}
+__device__ func max_func = max_d;
+
+
+void reduce_max(PointCloud<Point3D> &cloud) {
+    reduce(cloud, max_func);
+}
+
+__device__ double min_d(double n, double m) {
+    return (m < n) ? m : n;
+}
+__device__ func min_func = min_d;
+
+
+void reduce_min(PointCloud<Point3D> &cloud) {
+    reduce(cloud, min_func);
 }
