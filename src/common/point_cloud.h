@@ -7,6 +7,7 @@
 template <class T> class PointCloud {
 public:
     PointCloud() {};
+    PointCloud(std::vector<T> points): points(points) {};
     std::vector<T> points;
 
 };
