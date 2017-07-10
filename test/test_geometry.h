@@ -2,7 +2,7 @@
 #define FASTPOINTS_TEST_GEOMETRY_H
 
 #include <array>
-#include "test_utils.h"
+#include "testing.h"
 #include "../src/geometry/geometry.h"
 
 int test_eig3();

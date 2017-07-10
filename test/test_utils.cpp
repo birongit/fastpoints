@@ -1,23 +1,30 @@
+
+#include <iostream>
 #include "test_utils.h"
 
-bool check_equal(std::vector<double>& val1, std::vector<double>& val2, float tolerance) {
+void test_next_power_of_two() {
 
-    if (val1.size() != val2.size()) return false;
+    unsigned long i = 30;
+    auto res_int = next_power_of_two(i);
+    assert(res_int==32);
 
-    for (int i = 0; i < val1.size(); i++) {
-        if (fabs(val2[i] - val1[i]) > tolerance) return false;
-    }
+    unsigned long l = 2049;
+    auto res_long = next_power_of_two(l);
+    assert(res_long==4096);
 
-    return true;
+    unsigned short s = 100;
+    auto res_short = next_power_of_two(s);
+    assert(res_short==128);
+
+    unsigned int z = 0;
+    auto res_zero = next_power_of_two(z);
+    assert(res_zero==1);
 
 }
 
-bool check_equal(Point3D& val1, Point3D& val2, float tolerance) {
+int main(int argc, char * argv[]) {
 
-    if (fabs(val1.x - val2.x) > tolerance) return false;
-    if (fabs(val1.y - val2.y) > tolerance) return false;
-    if (fabs(val1.z - val2.z) > tolerance) return false;
+    test_next_power_of_two();
 
-    return true;
-
+    return 0;
 }
