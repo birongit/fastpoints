@@ -1,17 +1,26 @@
+#include <float.h>
 #include "kernels.h"
+#include "../utils/utils.h"
 
 typedef double (*func)(double n, double m);
 
-__global__ void reduce(const Point3D * const d_points, const uint number, Point3D *d_result, func* f, Point3D *d_reduce) {
+__global__ void reduce(const Point3D * const d_points, const uint number,
+                       Point3D *d_result, func* f, double id_element) {
 
     const int idx = threadIdx.x;
+    const int size = blockDim.x;
 
-    d_reduce[idx] = d_points[idx];  // use this copy (to shared memory) for padding with identity element
-    d_reduce[idx] = d_points[idx];
+    extern __shared__ Point3D d_reduce[];
+
+    if (idx < number) {
+        d_reduce[idx] = d_points[idx];
+    } else {
+        d_reduce[idx] = Point3D(id_element,id_element,id_element);
+    }
 
     __syncthreads();
 
-    for (unsigned int s = number / 2; s > 0; s >>= 1)
+    for (unsigned int s = size / 2; s > 0; s >>= 1)
     {
         if (idx < s)
         {
@@ -29,13 +38,14 @@ __global__ void reduce(const Point3D * const d_points, const uint number, Point3
 
 }
 
-Point3D reduce(PointCloud<Point3D> &cloud, func& f) {
+Point3D reduce(PointCloud<Point3D> &cloud, func& f, double identity_element) {
 
     Point3D *d_points;
     Point3D *d_result;
-    Point3D *d_reduce;
 
     auto num_points = cloud.points.size();
+
+    auto size = next_power_of_two(num_points);
 
     func* h_f;
     func* d_f;
@@ -44,14 +54,13 @@ Point3D reduce(PointCloud<Point3D> &cloud, func& f) {
     cudaMemcpyFromSymbol( &h_f[0], f, sizeof(func));
     cudaMemcpy(d_f,h_f,sizeof(func),cudaMemcpyHostToDevice);
 
-    cudaMalloc(&d_reduce, sizeof(Point3D) * cloud.points.size());
     cudaMalloc((void**) &d_result, sizeof(Point3D));
     cudaMalloc((void**) &d_points, sizeof(Point3D) * cloud.points.size());
     cudaMemcpy(d_points, &cloud.points[0], sizeof(Point3D) * cloud.points.size(), cudaMemcpyHostToDevice);
 
     int N = cloud.points.size();
 
-    reduce<<<1,N>>>(d_points, num_points, d_result, d_f, d_reduce);
+    reduce<<<1, size, size*sizeof(Point3D)>>>(d_points, num_points, d_result, d_f, identity_element);
 
     cudaDeviceSynchronize();
 
@@ -62,7 +71,6 @@ Point3D reduce(PointCloud<Point3D> &cloud, func& f) {
 
     cudaFree(d_points);
     cudaFree(d_result);
-    cudaFree(d_reduce);
 
     cudaFree(d_f);
     free(h_f);
@@ -76,17 +84,20 @@ __device__ double max_d(double n, double m) {
 }
 __device__ func max_func = max_d;
 
+double max_identity_element = - DBL_MAX;
 
 Point3D reduce_max(PointCloud<Point3D> &cloud) {
-    return reduce(cloud, max_func);
+    return reduce(cloud, max_func, max_identity_element);
 }
+
 
 __device__ double min_d(double n, double m) {
     return (m < n) ? m : n;
 }
 __device__ func min_func = min_d;
 
+double min_identity_element = DBL_MAX;
 
 Point3D reduce_min(PointCloud<Point3D> &cloud) {
-    return reduce(cloud, min_func);
+    return reduce(cloud, min_func, min_identity_element);
 }
