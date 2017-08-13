@@ -1,2 +1,2 @@
-set(core core/kernels.cu PARENT_SCOPE)
+set(core core/reduce.cu core/scan.cu PARENT_SCOPE)
 

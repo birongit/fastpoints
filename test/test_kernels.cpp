@@ -37,9 +37,49 @@ void test_reduce() {
 
 }
 
+void test_exclusive() {
+
+    std::vector<double> input{
+            0.14598861,  0.12668405,  0.54109701,  0.37165243,  0.92090129,
+            0.69069576,  0.77604026,  0.87044717,  0.01266919,  0.87628207
+    };
+
+    std::vector<double> correct{
+            0.        ,  0.14598861,  0.27267266,  0.81376967,  1.1854221 ,
+            2.10632339,  2.79701915,  3.57305941,  4.44350659,  4.45617578
+    };
+
+    auto output = exclusive_scan(input);
+
+    assert(check_equal(output, correct, 1.0e-8));
+
+}
+
+void test_inclusive() {
+
+    std::vector<double> input{
+            0.14598861,  0.12668405,  0.54109701,  0.37165243,  0.92090129,
+            0.69069576,  0.77604026,  0.87044717,  0.01266919,  0.87628207
+    };
+
+    std::vector<double> correct{
+            0.14598861,  0.27267266,  0.81376967,  1.1854221 ,  2.10632339,
+            2.79701915,  3.57305941,  4.44350659,  4.45617578,  5.33245785
+    };
+
+    auto output = inclusive_scan(input);
+
+    assert(check_equal(output, correct, 1.0e-8));
+
+}
+
 int main(int argc, char * argv[]) {
 
     test_reduce();
+
+    test_exclusive();
+
+    test_inclusive();
 
     return 0;
 }
