@@ -5,6 +5,7 @@
 #include "../common/point_types.h"
 #include <queue>
 #include <float.h>
+#include <algorithm>
 #include "geometry.h"
 
 #ifdef __CUDACC__

@@ -2,6 +2,7 @@
 #define FASTPOINTS_UTILS_H
 
 #include <iostream>
+#include <limits>
 
 template <typename T> T next_power_of_two(T unsigned_decimal) {
 

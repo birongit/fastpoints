@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 
 #include "../src/common/point_cloud.h"
 #include "../src/geometry/transform.h"
