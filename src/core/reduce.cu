@@ -67,7 +67,7 @@ Point3D reduce(PointCloud<Point3D> &cloud, func& f, double identity_element) {
     Point3D h_result;
     cudaMemcpy(&h_result, d_result, sizeof(Point3D), cudaMemcpyDeviceToHost);
 
-    std::cout << "Result of kernel: " << h_result.x << " " << h_result.y << " " << h_result.z << std::endl;
+    std::cout << "Result off kernel: " << h_result.x << " " << h_result.y << " " << h_result.z << std::endl;
 
     cudaFree(d_points);
     cudaFree(d_result);

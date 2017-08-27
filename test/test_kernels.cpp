@@ -45,8 +45,8 @@ void test_exclusive() {
     };
 
     std::vector<double> correct{
-            0.        ,  0.14598861,  0.27267266,  0.81376967,  1.1854221 ,
-            2.10632339,  2.79701915,  3.57305941,  4.44350659,  4.45617578
+            0.        ,  0.14598861,  0.27267266,  0.81376967,  1.18542210,
+            2.10632339,  2.79701915,  3.57305941,  4.44350658,  4.45617577
     };
 
     auto output = exclusive_scan(input);
@@ -74,6 +74,7 @@ void test_inclusive() {
 }
 
 int main(int argc, char * argv[]) {
+
 
     test_reduce();
 
