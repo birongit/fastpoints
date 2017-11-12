@@ -76,7 +76,7 @@ int main(int argc, char * argv[])
     cloud2.points.push_back(point);
   }
 
-  Normals ne(cloud2);
+  Normals<PointXYZI> ne(cloud);
   auto normals = ne.estimate();
 
   auto range = reduce_max(cloud2) - reduce_min(cloud2);
