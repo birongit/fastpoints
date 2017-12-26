@@ -4,18 +4,24 @@
 
 #include <cuda_runtime_api.h>
 #include <device_launch_parameters.h>
+#include <math.h>
 
-__global__ void shifting(PointXYZI *d_points, double *d_shift) {
+constexpr int THREADS_PER_BLOCK = 512;
 
-    int idx = threadIdx.x;
-    d_points[idx].x += d_shift[0];
-    d_points[idx].y += d_shift[1];
-    d_points[idx].z += d_shift[2];
+__global__ void shifting(PointXYZI *d_points, double *d_shift, size_t size) {
+
+    long idx = blockIdx.x * blockDim.x + threadIdx.x;
+
+    if (idx < size) {
+        d_points[idx].x += d_shift[0];
+        d_points[idx].y += d_shift[1];
+        d_points[idx].z += d_shift[2];
+    }
 }
 
-__global__ void rotate(PointXYZI *d_points, Quaternion *d_quaternion) {
+__global__ void rotate(PointXYZI *d_points, Quaternion *d_quaternion, size_t size) {
 
-    int idx = threadIdx.x;
+    long idx = blockIdx.x * blockDim.x + threadIdx.x;
 
     Quaternion q(d_points[idx]);
 
@@ -42,9 +48,10 @@ PointCloud<PointXYZI> shift_points(PointCloud<PointXYZI> &h_cloud, std::vector<d
     cudaMemcpy(d_points, h_points, h_cloud.points.size() * sizeof(PointXYZI), cudaMemcpyHostToDevice);
     cudaMemcpy(d_shift, h_shift, shift.size() * sizeof(double), cudaMemcpyHostToDevice);
 
-    int N = h_cloud.points.size();
+    long N = h_cloud.points.size();
+    int NUM_BLOCKS = ceil(N / THREADS_PER_BLOCK);
 
-    shifting<<<1,N>>>(d_points, d_shift);
+    shifting<<<NUM_BLOCKS,THREADS_PER_BLOCK>>>(d_points, d_shift, N);
 
     cudaDeviceSynchronize();
 
@@ -70,9 +77,10 @@ PointCloud<PointXYZI> rotate_points(PointCloud<PointXYZI> &h_cloud, Quaternion &
     cudaMemcpy(d_points, h_points, h_cloud.points.size() * sizeof(PointXYZI), cudaMemcpyHostToDevice);
     cudaMemcpy(d_quaternion, &h_quaternion, sizeof(Quaternion), cudaMemcpyHostToDevice);
 
-    int N = h_cloud.points.size();
+    long N = h_cloud.points.size();
+    int NUM_BLOCKS = ceil(N / THREADS_PER_BLOCK);
 
-    rotate<<<1,N>>>(d_points, d_quaternion);
+    rotate<<<NUM_BLOCKS,THREADS_PER_BLOCK>>>(d_points, d_quaternion, N);
 
     cudaDeviceSynchronize();
 
