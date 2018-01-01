@@ -49,7 +49,7 @@ PointCloud<PointXYZI> shift_points(PointCloud<PointXYZI> &h_cloud, std::vector<d
     cudaMemcpy(d_shift, h_shift, shift.size() * sizeof(double), cudaMemcpyHostToDevice);
 
     long N = h_cloud.points.size();
-    int NUM_BLOCKS = ceil(N / THREADS_PER_BLOCK);
+    int NUM_BLOCKS = ceil(float(N) / THREADS_PER_BLOCK);
 
     shifting<<<NUM_BLOCKS,THREADS_PER_BLOCK>>>(d_points, d_shift, N);
 
@@ -78,7 +78,7 @@ PointCloud<PointXYZI> rotate_points(PointCloud<PointXYZI> &h_cloud, Quaternion &
     cudaMemcpy(d_quaternion, &h_quaternion, sizeof(Quaternion), cudaMemcpyHostToDevice);
 
     long N = h_cloud.points.size();
-    int NUM_BLOCKS = ceil(N / THREADS_PER_BLOCK);
+    int NUM_BLOCKS = ceil(float(N) / THREADS_PER_BLOCK);
 
     rotate<<<NUM_BLOCKS,THREADS_PER_BLOCK>>>(d_points, d_quaternion, N);
 
